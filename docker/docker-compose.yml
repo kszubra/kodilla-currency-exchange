@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  db_postgresql_currencies:
+    container_name: currencies_db
+    image: postgres
+    ports:
+      - 5437:5432
+    environment:
+      POSTGRES_PASSWORD: currenciesPasswd
+      POSTGRES_USER: currenciesUser
+      POSTGRES_DB: currenciesDb

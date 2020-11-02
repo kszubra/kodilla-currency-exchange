@@ -1,0 +1,17 @@
+server:
+  port: 7781
+
+spring:
+  application:
+    name: currencies-server
+  profiles:
+    active: development
+  datasource:
+    url: jdbc:postgresql://localhost:5437/currenciesDb
+    platform: postgres
+    continue-on-error: true
+    username: currenciesUser
+    password: currenciesPasswd
+  jpa:
+    hibernate:
+      ddl-auto: update

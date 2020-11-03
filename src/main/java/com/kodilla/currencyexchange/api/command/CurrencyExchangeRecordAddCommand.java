@@ -1,7 +1,6 @@
-package com.kodilla.currencyexchange.api.snapshot;
+package com.kodilla.currencyexchange.api.command;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import com.kodilla.currencyexchange.api.enumeration.Currency;
 
@@ -9,18 +8,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
-@ToString
-public class CurrencyExchangeRecordSnapshot {
-
-    private Long currencyRecordId;
-
-    private LocalDateTime exchangeTime;
+public class CurrencyExchangeRecordAddCommand {
 
     private Currency baseCurrency;
 

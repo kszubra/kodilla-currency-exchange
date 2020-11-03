@@ -35,11 +35,14 @@ public class CurrencyExchangeRecord {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Currency from;
+    private Currency baseCurrency;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Currency to;
+    private Currency requestedCurrency;
+
+    @NotNull
+    private BigDecimal exchangedRate;
 
     @NotNull
     private BigDecimal exchangedValue;

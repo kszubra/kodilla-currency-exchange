@@ -10,6 +10,8 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URI;
 import java.util.Optional;
 
@@ -20,7 +22,7 @@ public class SimpleCurrencyRateService implements CurrencyRateService {
     private final RestTemplate restTemplate;
 
     @Override
-    public ExchangeRateResponse getExchangeRate(Currency base, Currency requested) {
+    public BigDecimal getExchangeRate(Currency base, Currency requested) {
         URI url = UriComponentsBuilder.fromHttpUrl(
                 String.format("https://api.exchangeratesapi.io/latest?base=%s&symbols=%s", base.toString(), requested.toString())
         )
@@ -29,10 +31,12 @@ public class SimpleCurrencyRateService implements CurrencyRateService {
 
         try{
             ExchangeRateResponse response = restTemplate.getForObject(url, ExchangeRateResponse.class);
-            return Optional.ofNullable(response).orElse(new ExchangeRateResponse());
+            Double value = Double.parseDouble(response.getRates().get(requested.toString()));
+            BigDecimal result = BigDecimal.valueOf(value).setScale(4, RoundingMode.HALF_EVEN);
+            return result;
         } catch(RestClientException e) {
             log.error(e.getMessage(), e);
-            return new ExchangeRateResponse();
+            return BigDecimal.ZERO;
         }
     }
 }

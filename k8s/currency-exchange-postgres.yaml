@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: currency-exchange-postgres-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 16Gi
+---
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: currency-exchange-postgres
+spec:
+  selector:
+    matchLabels:
+      app: kodilla-currency-exchange
+  template:
+    metadata:
+      labels:
+        app: currency-exchange-postgres
+    spec:
+      volumes:
+        - name: currency-exchange-postgres-storage
+          persistentVolumeClaim:
+            claimName: currency-exchange-postgres-pvc
+      containers:
+        - image: library/postgres:9.6
+          name: currency-exchange-postgres
+          env:

@@ -1,5 +1,5 @@
 server:
-  port: 7781
+  port: 8069
 
 spring:
   application:
@@ -7,7 +7,7 @@ spring:
   profiles:
     active: development
   datasource:
-    url: jdbc:postgresql://localhost:5437/currenciesDb
+    url: jdbc:postgresql://currencies_db:5432/currenciesDb
     platform: postgres
     continue-on-error: true
     username: currenciesUser

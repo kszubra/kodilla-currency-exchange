@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: k8s-kodilla-currency-exchange
+  labels:
+    app: k8s-kodilla-currency-exchange
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: k8s-kodilla-currency-exchange
+  template:
+    metadata:
+      labels:
+        app: k8s-kodilla-currency-exchange
+    spec:
+      containers:
+        - name: k8s-kodilla-currency-exchange
+          image: kodilla-currency-exchange
+          ports:
+            - containerPort: 8069
+          readinessProbe:
+            httpGet:
+              port: 8069
+              path: /actuator/health
+            initialDelaySeconds: 10
+            periodSeconds: 3
+          envFrom:
+            - configMapRef:
+                name: k8s-kodilla-currency-exchange

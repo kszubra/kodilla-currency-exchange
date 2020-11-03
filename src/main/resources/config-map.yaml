@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  APP_NAME: k8s-kodilla-currency-exchange
+kind: ConfigMap
+metadata:
+  name: k8s-kodilla-currency-exchange
+  labels:
+    app: k8s-kodilla-currency-exchange

@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: k8s-kodilla-currency-exchange
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: k8s-kodilla-currency-exchange
-          image: kodilla-currency-exchange
+          image: kackodilla/kodilla-k8s-currency-exchange
           ports:
             - containerPort: 8069
           readinessProbe:

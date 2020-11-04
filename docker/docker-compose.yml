@@ -1,27 +1,8 @@
 version: '3.5'
 
-networks:
-  currency-exchange:
-    name: currency-exchange
-    driver: bridge
-
 services:
-  db_postgresql_currencies:
-    networks:
-      - currency-exchange
-    container_name: currencies_db
-    image: postgres
-    ports:
-      - 5437:5432
-    environment:
-      POSTGRES_PASSWORD: currenciesPasswd
-      POSTGRES_USER: currenciesUser
-      POSTGRES_DB: currenciesDb
-
   kodilla-currency-exchange:
-    container_name: "kodilla-currency-exchange"
-    networks:
-      - currency-exchange
-    image: kodilla-currency-exchange
+    container_name: "kodilla-k8s-currency-exchange"
+    image: kodilla-k8s-currency-exchange
     ports:
       - "8069:8069"

@@ -1,9 +1,8 @@
 package com.kodilla.currencyexchange.service.interfaces;
 
-import java.math.BigDecimal;
-
 import com.kodilla.currencyexchange.api.enumeration.Currency;
-import com.kodilla.currencyexchange.api.response.ExchangeRateResponse;
+
+import java.math.BigDecimal;
 
 public interface CurrencyRateService {
 

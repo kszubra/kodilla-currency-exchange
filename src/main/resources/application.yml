@@ -6,12 +6,3 @@ spring:
     name: currencies-server
   profiles:
     active: development
-  datasource:
-    url: jdbc:postgresql://currencies_db:5432/currenciesDb
-    platform: postgres
-    continue-on-error: true
-    username: currenciesUser
-    password: currenciesPasswd
-  jpa:
-    hibernate:
-      ddl-auto: update

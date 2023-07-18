@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: currency-exchange-postgres-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 16Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: currency-exchange-postgres
+spec:
+  selector:
+    matchLabels:
+      app: kodilla-currency-exchange
+  template:
+    metadata:
+      labels:
+        app: currency-exchange-postgres
+    spec:
+      volumes:
+        - name: currency-exchange-postgres-storage
+          persistentVolumeClaim:
+            claimName: currency-exchange-postgres-pvc
+      containers:
+        - image: library/postgres:9.6
+          name: currency-exchange-postgres
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: currency-exchange-postgres-config
+                  key: postgres_user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: currency-exchange-postgres-secret
+                  key: password
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: currency-exchange-postgres-config
+                  key: postgres_db
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: currency-exchange-postgres-config
+                  key: postgres_port
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          ports:
+            - containerPort: 5432
+              name: currency-exchange-postgres
+          volumeMounts:
+            - name: currency-exchange-postgres-storage
+              mountPath: /var/lib/postgreaql/data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-kodilla-currency-exchange
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+  selector:
+        app: currency-exchange-postgres

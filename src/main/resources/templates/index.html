@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header><title>Currency Records Application</title></header>
+<body>
+<tr th:if="${value == null}">
+    <div>No value</div>
+</tr>
+<tr th:if="${value != null}">
+    <div th:text="${value}"></div>
+</tr>
+
+<form>
+    <input type="text" name="baseCurrency">
+    <input type="submit" value="Search">
+</form>
+</body>
+</html>

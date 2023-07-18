@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: currency-exchange-app
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: currency-exchange-app
+  replicas: 1
+  template:
+    metadata:
+      name: currency-exchange-app
+      labels:
+        app: currency-exchange-app
+    spec:
+      containers:
+        - name: currency-exchange-app
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: currency-exchange-postgres-config
+                  key: postgres_user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                 secretKeyRef:
+                   name: currency-exchange-postgres-secret
+                   key: password
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: memory-hostname-config
+                  key: postgres_host
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: currency-exchange-postgres-config
+                  key: postgres_db
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: currency-exchange-postgres-config
+                  key: postgres_port
+          image: mps4dev/memory:1.0
+
